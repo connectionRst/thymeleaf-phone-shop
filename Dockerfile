@@ -11,6 +11,10 @@ COPY src ./src
 # Package the application as a JAR file
 RUN mvn clean package -DskipTests
 
+# workaround under linux
+RUN mkdir img
+RUN mv src/main/resources/static/images img/
+
 # Expose the application on port 8080
 EXPOSE 8080
 
