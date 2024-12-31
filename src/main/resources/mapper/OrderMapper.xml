@@ -7,6 +7,7 @@
         <id column="id" property="id" />
         <result column="user_id" property="userId" />
         <result column="good_id" property="goodId" />
+        <result column="shangjia_id" property="shangjiaId" />
         <result column="total_price" property="totalPrice" />
         <result column="num" property="num" />
         <result column="price" property="price" />
@@ -17,6 +18,9 @@
         <result column="create_time" property="createTime" />
         <association property="category" javaType="com.pojo.GoodCategory">
             <result property="name" column="categoryName"/>
+        </association>
+        <association property="shangjia" javaType="com.pojo.User">
+            <result property="name" column="shangjiaName"/>
         </association>
         <association property="good" javaType="com.pojo.Good">
             <result property="name" column="goodName"/>
@@ -35,12 +39,42 @@
         g.name as goodName,
         g.image as goodImage,
         g.sku as goodSku,
-        g.category_id as categoryId
+        g.category_id as categoryId,
+        us.name as shangjiaName
         from t_order o
         left join t_user u on o.user_id = u.id
         left join t_good g on o.good_id = g.id
         left join t_good_category c on g.category_id = c.id
+        left join t_user us on o.shangjia_id = us.id
         <where>
+            <if test="userName != null and userName != '' ">
+                and u.name like concat('%', #{userName}, '%')
+            </if>
+            <if test="goodName != null and goodName != '' ">
+                and g.name like concat('%', #{goodName}, '%')
+            </if>
+            <if test="status != null and status != '' ">
+                and o.status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <select id="shangjiaGetAll" resultMap="BaseResultMap">
+        select o.*,
+        c.name as categoryName,
+        u.name as userName,
+        g.name as goodName,
+        g.image as goodImage,
+        g.sku as goodSku,
+        g.category_id as categoryId,
+        us.name as shangjiaName
+        from t_order o
+        left join t_user u on o.user_id = u.id
+        left join t_good g on o.good_id = g.id
+        left join t_good_category c on g.category_id = c.id
+        left join t_user us on o.shangjia_id = us.id
+        <where>
+            and o.shangjia_id = #{shangjiaId}
             <if test="userName != null and userName != '' ">
                 and u.name like concat('%', #{userName}, '%')
             </if>

@@ -21,4 +21,9 @@ public interface OrderMapper extends BaseMapper<Order> {
                             @Param("goodName")String goodName,
                             @Param("status")Integer status);
 
+    List<Order> shangjiaGetAll(@Param("userName")String userName,
+                            @Param("goodName")String goodName,
+                            @Param("status")Integer status,
+                            @Param("shangjiaId")String shangjiaId);
+
 }

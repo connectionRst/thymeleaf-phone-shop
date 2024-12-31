@@ -122,6 +122,20 @@ public class OrderController {
         return mv;
     }
 
+    @RequestMapping("/shangjiaGetAll")
+    public ResultPage shangjiaGetAll(@RequestParam(value = "userName", required = false) String userName,
+                                  @RequestParam(value = "goodName", required = false) String goodName,
+                                  @RequestParam(value = "status", required = false) Integer status,
+                                  @RequestParam(value = "page") Integer page,
+                                  @RequestParam(value = "limit") Integer limit) {
+        //分页条件
+        PageHelper.startPage(page, limit);
+        User currentUser = (User) SecurityUtils.getSubject().getPrincipal();
+        List<Order> orderList = orderService.shangjiaGetAll(userName, goodName, status, currentUser.getId());
+        PageInfo<Order> orderPageInfo = new PageInfo<>(orderList, limit);
+        return new ResultPage(0, (int) orderPageInfo.getTotal(), orderPageInfo.getList());
+    }
+
     //删除订单
     @PostMapping("/delete")
     public Result delete(@RequestParam(value = "id") String id) {

@@ -78,6 +78,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
             }
             Order order = new Order();
             order.setUserId(currentUser.getId());
+            order.setShangjiaId(good.getShangjiaId());
             order.setAddress(address.getProvince() + address.getCity() + address.getArea() + address.getDetail());
             order.setName(address.getName());
             order.setPhone(address.getPhone());
@@ -104,6 +105,11 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     @Override
     public List<Order> adminGetAll(String userName, String goodName, Integer status) {
         return this.baseMapper.adminGetAll(userName, goodName, status);
+    }
+
+    @Override
+    public List<Order> shangjiaGetAll(String userName, String goodName, Integer status, String shangjiaId) {
+        return this.baseMapper.shangjiaGetAll(userName, goodName, status, shangjiaId);
     }
 
 

@@ -16,5 +16,6 @@ import java.util.List;
 public interface GoodService extends IService<Good> {
 
     List<Good> getAll(String name, String categoryId);
+    List<Good> shangjiaGetAll(String name, String categoryId, String shangjiaId);
 
 }

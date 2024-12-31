@@ -24,6 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * <p>
@@ -83,9 +84,14 @@ public class UserController {
     //添加用户信息
     @PostMapping("/add")
     public Result add(User user) {
-        if (userService.lambdaQuery().eq(User::getPhone, user.getPhone()).list().size() > 0) {
+        final String phone = user.getPhone();
+        final String name = user.getName();
+        if (!Pattern.matches("^1[3-9]\\d{9}$", phone)) {
+            return Result.failure("手机号格式错误，目前只支持13位大陆手机号");
+        }
+        if (userService.lambdaQuery().eq(User::getPhone, phone).list().size() > 0) {
             return Result.failure("手机号码已被注册");
-        }  else if (userService.lambdaQuery().eq(User::getName, user.getName()).list().size() > 0) {
+        }  else if (userService.lambdaQuery().eq(User::getName, name).list().size() > 0) {
             return Result.failure("用户名已被注册");
         } else {
             return Result.decide(userService.save(user));

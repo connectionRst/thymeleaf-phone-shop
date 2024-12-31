@@ -21,4 +21,6 @@ public interface OrderService extends IService<Order> {
 
     List<Order> adminGetAll(String userName, String goodName, Integer status);
 
+    List<Order> shangjiaGetAll(String userName, String goodName, Integer status, String shangjiaId);
+
 }

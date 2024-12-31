@@ -38,7 +38,13 @@ public class Order implements Serializable {
     private String userId;
 
     /**
-     * 用户Id
+     * 商家Id
+     */
+    private String shangjiaId;
+
+
+    /**
+     * 商品Id
      */
     private String goodId;
 
@@ -100,5 +106,8 @@ public class Order implements Serializable {
 
     @TableField(exist = false)
     private GoodCategory category;
+
+    @TableField(exist = false)
+    private User shangjia;
 
 }

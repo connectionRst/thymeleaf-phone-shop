@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>掌逸商城后台管理-登陆</title>
+    <title>手机商城管理平台-登陆</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -33,11 +33,11 @@
         <div class="layui-form login-form">
             <form class="layui-form" action="">
                 <div class="layui-form-item logo-title">
-                    <h1>掌逸商城后台管理</h1>
+                    <h1>手机商城管理平台</h1>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-icon layui-icon-username" for="phone"></label>
-                    <input type="text" name="phone" id="phone" lay-verify="required|account" placeholder="账号" autocomplete="off" class="layui-input">
+                    <input type="text" name="phone" id="phone" lay-verify="required|account" placeholder="手机号码" autocomplete="off" class="layui-input">
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-icon layui-icon-password" for="password"></label>
@@ -80,6 +80,9 @@
                         if (data.data.roleId === 0) {
                             window.location.href = '/adminIndex';
                             localStorage.setItem("roleId", "0")
+                        } else if (data.data.roleId === 2) {
+                            window.location.href = '/shangjiaIndex';
+                            localStorage.setItem("roleId", "2")
                         } else {
                             //普通用户
                             layer.msg('你没有权限登录到后台管理');

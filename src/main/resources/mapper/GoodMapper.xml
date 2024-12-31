@@ -5,6 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.pojo.Good">
         <id column="id" property="id" />
+        <result column="shangjia_id" property="shangjiaId" />
         <result column="category_id" property="categoryId" />
         <result column="name" property="name" />
         <result column="price" property="price" />
@@ -18,14 +19,37 @@
         <association property="goodCategory" javaType="com.pojo.GoodCategory">
             <result property="name" column="categoryName"/>
         </association>
+        <association property="shangjia" javaType="com.pojo.User">
+            <result property="name" column="shangjiaName"/>
+        </association>
     </resultMap>
 
     <select id="getAll" resultMap="BaseResultMap">
-        select g.*, c.name as categoryName
-        from t_good g left join t_good_category c
+        select g.*, c.name as categoryName, u.name as shangjiaName from t_good g
+        left join t_good_category c
         on g.category_id = c.id
+        left join t_user u
+        on g.shangjia_id = u.id
         <where>
             g.deleted = 0
+            <if test="categoryId != null and categoryId != '' ">
+                and g.category_id = #{categoryId}
+            </if>
+            <if test="name != null and name != '' ">
+                and g.name like concat('%', #{name}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="shangjiaGetAll" resultMap="BaseResultMap">
+        select g.*, c.name as categoryName, u.name as shangjiaName from t_good g
+        left join t_good_category c
+        on g.category_id = c.id
+        left join t_user u
+        on g.shangjia_id = u.id
+        <where>
+            g.deleted = 0
+            and g.shangjia_id = #{shangjiaId}
             <if test="categoryId != null and categoryId != '' ">
                 and g.category_id = #{categoryId}
             </if>

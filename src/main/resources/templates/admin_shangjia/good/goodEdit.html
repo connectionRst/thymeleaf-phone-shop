@@ -62,7 +62,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">状态</label>
                 <div class="layui-input-block">
-                    <input type="radio" name="status" value="1" title="上架" checked>
+                    <input type="radio" name="status" value="1" title="上架" checked="">
                     <input type="radio" name="status" value="2" title="下架">
                 </div>
             </div>
@@ -119,7 +119,7 @@
 
         async function getAllCategory() {
             console.log("Starting getting Categories")
-            const a = await new Promise((resolve, reject) => {
+            await new Promise((resolve) => {
                 $.getJSON("/category/getAllCategory", function (res) {
                     var html = ""
                     for (let i = 0; i < res.data.length; i++) {

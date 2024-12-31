@@ -27,6 +27,11 @@ public class Good implements Serializable {
     private String id;
 
     /**
+     * 商家id
+     */
+    private String shangjiaId;
+
+    /**
      * 商品分类id
      */
     private String categoryId;
@@ -76,6 +81,9 @@ public class Good implements Serializable {
 
     @TableField(exist = false)
     private GoodCategory goodCategory;
+
+    @TableField(exist = false)
+    private User shangjia;
 
     @TableField(exist = false)
     private Integer goodBuyNum;

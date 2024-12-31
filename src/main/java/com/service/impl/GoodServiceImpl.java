@@ -23,4 +23,7 @@ public class GoodServiceImpl extends ServiceImpl<GoodMapper, Good> implements Go
     public List<Good> getAll(String name, String categoryId) {
         return this.baseMapper.getAll(name, categoryId);
     }
+    public List<Good> shangjiaGetAll(String name, String categoryId, String shangjiaId) {
+        return this.baseMapper.shangjiaGetAll(name, categoryId, shangjiaId);
+    }
 }

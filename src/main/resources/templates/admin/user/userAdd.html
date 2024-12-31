@@ -42,6 +42,15 @@
             </div>
 
             <div class="layui-form-item">
+                <label class="layui-form-label">身份</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="roleId" value="1" title="普通用户" checked="">
+                    <input type="radio" name="roleId" value="2" title="商家">
+                    <input type="radio" name="roleId" value="0" title="管理员">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
                 <label class="layui-form-label">头像:</label>
                 <div class="layui-input-block">
                     <input type="hidden" id="image" name="avatar" lay-verify="required" lay-reqtext="请上传用户头像">

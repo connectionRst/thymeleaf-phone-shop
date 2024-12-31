@@ -13,6 +13,7 @@ import com.pojo.result.ResultPage;
 import com.service.CommentService;
 import com.service.GoodService;
 import com.service.UserService;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +46,12 @@ public class GoodController {
     @PostMapping("/add")
     public Result add(Good good) {
         //验证表单信息
+        // TODO 验证用户合法性
+        // FIXME 待测试
+        User currentUser = (User) SecurityUtils.getSubject().getPrincipal();
+        if (currentUser == null || currentUser.getId().equals(good.getShangjiaId())) {
+            return Result.failure("商家不合法");
+        }
         if (goodService.getOne(new LambdaQueryWrapper<Good>().eq(Good::getName, good.getName())) != null) {
             return Result.failure("已有相同名称的商品，请重新命名");
         } else {
@@ -86,6 +93,20 @@ public class GoodController {
         //分页条件
         PageHelper.startPage(page, limit);
         List<Good> bookList = goodService.getAll(name, categoryId);
+        PageInfo<Good> goodPageInfo = new PageInfo<>(bookList, limit);
+        return new ResultPage(0, (int) goodPageInfo.getTotal(), goodPageInfo.getList());
+    }
+
+    @RequestMapping("/shangjiaGetAll")
+    public ResultPage shangjiaGetAll (@RequestParam(value = "name", required = false) String name,
+                             @RequestParam(value = "categoryId", required = false) String categoryId,
+                             @RequestParam(value = "page") Integer page,
+                             @RequestParam(value = "limit") Integer limit) {
+        //分页条件
+        PageHelper.startPage(page, limit);
+        User currentUser = (User) SecurityUtils.getSubject().getPrincipal();
+        System.out.println("---------->>>>> 商家：" + currentUser.getName());
+        List<Good> bookList = goodService.shangjiaGetAll(name, categoryId, currentUser.getId());
         PageInfo<Good> goodPageInfo = new PageInfo<>(bookList, limit);
         return new ResultPage(0, (int) goodPageInfo.getTotal(), goodPageInfo.getList());
     }

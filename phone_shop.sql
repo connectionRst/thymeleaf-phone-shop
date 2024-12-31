@@ -123,6 +123,7 @@ INSERT INTO `t_comment` VALUES ('fdad3f1b87ef5104d2fd4800e4bee7be', 'd193b6e8fa7
 DROP TABLE IF EXISTS `t_good`;
 CREATE TABLE `t_good` (
   `id` varchar(32) COLLATE utf8_bin NOT NULL,
+  `shangjia_id` varchar(32) COLLATE utf8_bin DEFAULT '' COMMENT '商家id',
   `category_id` varchar(32) COLLATE utf8_bin DEFAULT '' COMMENT '商品分类id',
   `name` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '礼品名称',
   `price` varchar(10) COLLATE utf8_bin DEFAULT NULL COMMENT '价值',
@@ -139,18 +140,18 @@ CREATE TABLE `t_good` (
 -- ----------------------------
 -- Records of t_good
 -- ----------------------------
-INSERT INTO `t_good` VALUES ('059ea96c6f168ef439c0b95e61b9ce00', '1020670a3f68535036f37bc21c7a99ae', 'iPhone13', '5999', '1', '/images/good/d7553589-5bf0-41e4-9186-348d7ef60d92.jpg', '128G 1200万像素', '苹果手机测试', '0', '0', '0');
-INSERT INTO `t_good` VALUES ('07fd502872eb75bf6230ed2fdcd2d2ec', '6e72626d658ce3fa2256abb12447172d', '华为Mate 40E', '6069', '2', '/images/good/e1c483fb-44cd-42d2-9968-dc038e1b4d36.jpg', ' 4G 全网通 6.5英寸 8GB+128GB', '麒麟990E芯片，超感知徕卡影像，有线无线双超级快充，HarmonyOS全场景智慧体验，源于宇宙探索的星环美学,6.5英寸曲面屏舒适握持感', '0', '0', '0');
-INSERT INTO `t_good` VALUES ('087fa7251f9582fe59b42acfb6014545', '6e72626d658ce3fa2256abb12447172d', '华为(HUAWEI)', '5399', '4', '/images/good/0ba28d51-e270-474e-88bb-de243d78a6b8.jpg', '4G全网通 8+128GB幻夜黑', '6400万高清四摄 66W超级快充 6.5英寸OLED大屏华为手机 标配无充', '0', '0', '0');
-INSERT INTO `t_good` VALUES ('2e48e83346628b624fbb77d34987c03c', 'eca60a661fa7ae1b201ea34f3ef0099c', '小米12 Pro', '5399', '5', '/images/good/3344b777-685c-4d01-b03b-6df432cf34e7.jpg', '12GB+256GB 黑色 5G手机', '强到芯想事成的全新一代骁龙8，采用旗舰级4nm制程工艺，集成百亿级晶体管，搭载全新架构,性能更强,功耗更低', '0', '0', '0');
-INSERT INTO `t_good` VALUES ('329d14f652cceaba0792a552e25cbb6a', 'ec60e1aa9a275d63ad9368ec1559d39d', 'vivo iQOO 9', '3499', '1', '/images/good/df980d1b-65da-423e-a9d4-6056444b6b6c.jpg', '12GB+256GB', '120W闪充 骁龙888 独立显示芯片 KPL官方赛事电竞手机 双模5G全网通iqoo8', '0', '0', '0');
-INSERT INTO `t_good` VALUES ('32af9da4b03da3af7130b8930f23a31b', '62bc9165650dda7d1d30f8e3a5c1a602', 'OPPOReno7', '2599', '2', '/images/good/82b51a72-b4fc-4a00-bad7-6ad3029d0f41.jpg', '8GB 128GB 6400万像素', '前置索尼 IMX709 超感光猫眼镜头 高通骁龙778G 5G手机', '0', '0', '0');
-INSERT INTO `t_good` VALUES ('814de5100f482177e4144fac4e46a190', '6e72626d658ce3fa2256abb12447172d', 'test', '100', '4', '/images/good/d185e0a7-8e23-4536-86f9-502276ee8e70.jpg', '128G', 'hhhhhh', '0', '0', '1');
-INSERT INTO `t_good` VALUES ('a6b847b6f49ec332c14bb7bed559845a', 'ec60e1aa9a275d63ad9368ec1559d39d', 'vivo X70 Pro+', '5999', '2', '/images/good/aaf59613-ba02-45e2-ba34-7988657b7375.JPG', '12GB 256GB 5000万像素', '2K屏幕 IP68级防水 全四摄光学防抖', '0', '0', '0');
-INSERT INTO `t_good` VALUES ('a6f69c83670967f34e222c56d71c7a53', '6e72626d658ce3fa2256abb12447172d', '华为P50系列', '6488', '6', '/images/good/96881156-d59c-47db-9678-cadaa0c6ea6c.jpg', '骁龙888 4G 8GB+256GB', '万象双环，设计美学新生。万象双环设计，将影像与艺术合二为一，汲取几何灵感，秩序中饱含诗意', '0', '0', '0');
-INSERT INTO `t_good` VALUES ('c3aed79622a05262fb7dacbaebd2819d', 'bd09197230559bdebea7acc9c1a41d92', '荣耀60', '2699', '7', '/images/good/61963027-1446-4505-a943-8c2f370001fa.jpg', '10800万像素  8GB+128GB', '对称美学称眼也称手，荣耀60首次采用前后对称双曲面设计,屏幕曲率和后盖曲率完全一致,呈现出前后完美对称的双曲面形态', '1', '0', '0');
-INSERT INTO `t_good` VALUES ('e5e64e3e41cb04e70177b85393593ffb', 'ec60e1aa9a275d63ad9368ec1559d39d', 'vivoX70 Pro', '3699.00', '2', '/images/good/2ee5945e-5ef1-4b67-b4f3-087363e82ce3.jpg', '5G手机 8GB+256GB 星云', '5nm旗舰芯片 专业影像芯片V1 蔡司光学镜头 120Hz高刷', '1', '0', '0');
-INSERT INTO `t_good` VALUES ('f0ec98f32c0f340eff4da2d08aff895a', '0ed4204eb886828ce2153fb4600737a8', '三星Galaxy Note20 Ultra 5G', '5999', '16', '/images/good/56f48e54-903b-4107-a304-5cfd3157585e.jpg', '12GB+256GB 迷雾金', '这是Galaxy Note20Ultra 5G，惊艳设计强大性能，为Samsung Galaxy引入了新的标志性颜色迷雾金，优质的中性色调，雾面质感，时尚经典。', '1', '0', '0');
+INSERT INTO `t_good` VALUES ('059ea96c6f168ef439c0b95e61b9ce00', 'e8d491a19f50c2b2408b9b37e8d4a6f5', '1020670a3f68535036f37bc21c7a99ae', 'iPhone13', '5999', '1', '/images/good/d7553589-5bf0-41e4-9186-348d7ef60d92.jpg', '128G 1200万像素', '苹果手机测试', '0', '0', '0');
+INSERT INTO `t_good` VALUES ('07fd502872eb75bf6230ed2fdcd2d2ec', 'c2b2408b9b37e8d491a19f50a6f54a2d', '6e72626d658ce3fa2256abb12447172d', '华为Mate 40E', '6069', '2', '/images/good/e1c483fb-44cd-42d2-9968-dc038e1b4d36.jpg', ' 4G 全网通 6.5英寸 8GB+128GB', '麒麟990E芯片，超感知徕卡影像，有线无线双超级快充，HarmonyOS全场景智慧体验，源于宇宙探索的星环美学,6.5英寸曲面屏舒适握持感', '0', '0', '0');
+INSERT INTO `t_good` VALUES ('087fa7251f9582fe59b42acfb6014545', 'c2b2408b9b37e8d491a19f50a6f54a2d', '6e72626d658ce3fa2256abb12447172d', '华为(HUAWEI)', '5399', '4', '/images/good/0ba28d51-e270-474e-88bb-de243d78a6b8.jpg', '4G全网通 8+128GB幻夜黑', '6400万高清四摄 66W超级快充 6.5英寸OLED大屏华为手机 标配无充', '0', '0', '0');
+INSERT INTO `t_good` VALUES ('2e48e83346628b624fbb77d34987c03c', 'e8d491a19f50c2b2408b9b37e8d4a6f5', 'eca60a661fa7ae1b201ea34f3ef0099c', '小米12 Pro', '5399', '5', '/images/good/3344b777-685c-4d01-b03b-6df432cf34e7.jpg', '12GB+256GB 黑色 5G手机', '强到芯想事成的全新一代骁龙8，采用旗舰级4nm制程工艺，集成百亿级晶体管，搭载全新架构,性能更强,功耗更低', '0', '0', '0');
+INSERT INTO `t_good` VALUES ('329d14f652cceaba0792a552e25cbb6a', 'e8d491a19f50c2b2408b9b37e8d4a6f5', 'ec60e1aa9a275d63ad9368ec1559d39d', 'vivo iQOO 9', '3499', '1', '/images/good/df980d1b-65da-423e-a9d4-6056444b6b6c.jpg', '12GB+256GB', '120W闪充 骁龙888 独立显示芯片 KPL官方赛事电竞手机 双模5G全网通iqoo8', '0', '0', '0');
+INSERT INTO `t_good` VALUES ('32af9da4b03da3af7130b8930f23a31b', 'e8d491a19f50c2b2408b9b37e8d4a6f5', '62bc9165650dda7d1d30f8e3a5c1a602', 'OPPOReno7', '2599', '2', '/images/good/82b51a72-b4fc-4a00-bad7-6ad3029d0f41.jpg', '8GB 128GB 6400万像素', '前置索尼 IMX709 超感光猫眼镜头 高通骁龙778G 5G手机', '0', '0', '0');
+INSERT INTO `t_good` VALUES ('814de5100f482177e4144fac4e46a190', 'e8d491a19f50c2b2408b9b37e8d4a6f5', '6e72626d658ce3fa2256abb12447172d', 'test', '100', '4', '/images/good/d185e0a7-8e23-4536-86f9-502276ee8e70.jpg', '128G', 'hhhhhh', '0', '0', '1');
+INSERT INTO `t_good` VALUES ('a6b847b6f49ec332c14bb7bed559845a', 'e8d491a19f50c2b2408b9b37e8d4a6f5', 'ec60e1aa9a275d63ad9368ec1559d39d', 'vivo X70 Pro+', '5999', '2', '/images/good/aaf59613-ba02-45e2-ba34-7988657b7375.JPG', '12GB 256GB 5000万像素', '2K屏幕 IP68级防水 全四摄光学防抖', '0', '0', '0');
+INSERT INTO `t_good` VALUES ('a6f69c83670967f34e222c56d71c7a53', 'c2b2408b9b37e8d491a19f50a6f54a2d', '6e72626d658ce3fa2256abb12447172d', '华为P50系列', '6488', '6', '/images/good/96881156-d59c-47db-9678-cadaa0c6ea6c.jpg', '骁龙888 4G 8GB+256GB', '万象双环，设计美学新生。万象双环设计，将影像与艺术合二为一，汲取几何灵感，秩序中饱含诗意', '0', '0', '0');
+INSERT INTO `t_good` VALUES ('c3aed79622a05262fb7dacbaebd2819d', 'e8d491a19f50c2b2408b9b37e8d4a6f5', 'bd09197230559bdebea7acc9c1a41d92', '荣耀60', '2699', '7', '/images/good/61963027-1446-4505-a943-8c2f370001fa.jpg', '10800万像素  8GB+128GB', '对称美学称眼也称手，荣耀60首次采用前后对称双曲面设计,屏幕曲率和后盖曲率完全一致,呈现出前后完美对称的双曲面形态', '1', '0', '0');
+INSERT INTO `t_good` VALUES ('e5e64e3e41cb04e70177b85393593ffb', 'e8d491a19f50c2b2408b9b37e8d4a6f5', 'ec60e1aa9a275d63ad9368ec1559d39d', 'vivoX70 Pro', '3699.00', '2', '/images/good/2ee5945e-5ef1-4b67-b4f3-087363e82ce3.jpg', '5G手机 8GB+256GB 星云', '5nm旗舰芯片 专业影像芯片V1 蔡司光学镜头 120Hz高刷', '1', '0', '0');
+INSERT INTO `t_good` VALUES ('f0ec98f32c0f340eff4da2d08aff895a', 'e8d491a19f50c2b2408b9b37e8d4a6f5', '0ed4204eb886828ce2153fb4600737a8', '三星Galaxy Note20 Ultra 5G', '5999', '16', '/images/good/56f48e54-903b-4107-a304-5cfd3157585e.jpg', '12GB+256GB 迷雾金', '这是Galaxy Note20Ultra 5G，惊艳设计强大性能，为Samsung Galaxy引入了新的标志性颜色迷雾金，优质的中性色调，雾面质感，时尚经典。', '1', '0', '0');
 
 -- ----------------------------
 -- Table structure for t_good_category
@@ -182,12 +183,14 @@ DROP TABLE IF EXISTS `t_order`;
 CREATE TABLE `t_order` (
   `id` varchar(32) NOT NULL COMMENT '订单Id',
   `user_id` varchar(32) DEFAULT NULL COMMENT '用户Id',
-  `good_id` varchar(32) DEFAULT NULL COMMENT '用户Id',
+  `shangjia_id` varchar(32) COLLATE utf8_bin DEFAULT '' COMMENT '商家id',
+  `good_id` varchar(32) DEFAULT NULL COMMENT '商品Id',
   `total_price` varchar(32) DEFAULT NULL,
   `num` int(11) DEFAULT NULL,
   `price` varchar(32) DEFAULT NULL COMMENT '订单价格',
   `status` int(11) NOT NULL DEFAULT '1' COMMENT '1待发货 2 待收货 3待评价 4完成',
   `name` varchar(20) DEFAULT NULL COMMENT '订单收货人',
+
   `phone` varchar(20) DEFAULT NULL COMMENT '订单手机',
   `address` varchar(100) DEFAULT NULL COMMENT '订单地址',
   `create_time` datetime DEFAULT NULL COMMENT '时间',
@@ -197,11 +200,11 @@ CREATE TABLE `t_order` (
 -- ----------------------------
 -- Records of t_order
 -- ----------------------------
-INSERT INTO `t_order` VALUES ('2494fff82e01ed5c5401933bc60a87eb', 'd193b6e8fa765440c16f8ffa01acbd00', '2e48e83346628b624fbb77d34987c03c', '5399.0', '1', '5399', '1', '陈煜枫', '13726452983', '广东省广州市白云区12341231231', '2022-12-04 02:14:28');
-INSERT INTO `t_order` VALUES ('61521561c764e51103901eab67e89dcf', 'd193b6e8fa765440c16f8ffa01acbd00', '32af9da4b03da3af7130b8930f23a31b', '2599.0', '1', '2599', '4', '陈煜枫', '13726452983', '广东省广州市白云区12341231231', '2022-12-03 10:14:34');
-INSERT INTO `t_order` VALUES ('6fcf4e4eb2f60ad68bc3b4367a0e750f', 'd193b6e8fa765440c16f8ffa01acbd00', '32af9da4b03da3af7130b8930f23a31b', '2599.0', '1', '2599', '1', '测试地址', '13726452853', '江西省景德镇市昌江区2', '2022-02-12 05:12:32');
-INSERT INTO `t_order` VALUES ('ad2c845b3c16c420f9d347c8026a3061', 'd193b6e8fa765440c16f8ffa01acbd00', 'f0ec98f32c0f340eff4da2d08aff895a', '5999.0', '1', '5999', '1', '陈煜枫', '13726452983', '广东省广州市白云区12341231231', '2022-12-03 10:14:34');
-INSERT INTO `t_order` VALUES ('e3cea595988aa603414b3c5120b73b17', 'd193b6e8fa765440c16f8ffa01acbd00', '07fd502872eb75bf6230ed2fdcd2d2ec', '12138.0', '2', '6069', '1', '测试地址', '13726452853', '江西省景德镇市昌江区2', '2022-02-12 05:12:32');
+INSERT INTO `t_order` VALUES ('2494fff82e01ed5c5401933bc60a87eb', 'd193b6e8fa765440c16f8ffa01acbd00', 'e8d491a19f50c2b2408b9b37e8d4a6f5', '2e48e83346628b624fbb77d34987c03c', '5399.0', '1', '5399', '1', '陈煜枫', '13726452983', '广东省广州市白云区12341231231', '2022-12-04 02:14:28');
+INSERT INTO `t_order` VALUES ('61521561c764e51103901eab67e89dcf', 'd193b6e8fa765440c16f8ffa01acbd00', 'e8d491a19f50c2b2408b9b37e8d4a6f5', '32af9da4b03da3af7130b8930f23a31b', '2599.0', '1', '2599', '4', '陈煜枫', '13726452983', '广东省广州市白云区12341231231', '2022-12-03 10:14:34');
+INSERT INTO `t_order` VALUES ('6fcf4e4eb2f60ad68bc3b4367a0e750f', 'd193b6e8fa765440c16f8ffa01acbd00', 'e8d491a19f50c2b2408b9b37e8d4a6f5', '32af9da4b03da3af7130b8930f23a31b', '2599.0', '1', '2599', '1', '测试地址', '13726452853', '江西省景德镇市昌江区2', '2022-02-12 05:12:32');
+INSERT INTO `t_order` VALUES ('ad2c845b3c16c420f9d347c8026a3061', 'd193b6e8fa765440c16f8ffa01acbd00', 'e8d491a19f50c2b2408b9b37e8d4a6f5', 'f0ec98f32c0f340eff4da2d08aff895a', '5999.0', '1', '5999', '1', '陈煜枫', '13726452983', '广东省广州市白云区12341231231', '2022-12-03 10:14:34');
+INSERT INTO `t_order` VALUES ('e3cea595988aa603414b3c5120b73b17', 'd193b6e8fa765440c16f8ffa01acbd00', 'e8d491a19f50c2b2408b9b37e8d4a6f5', '07fd502872eb75bf6230ed2fdcd2d2ec', '12138.0', '2', '6069', '1', '测试地址', '13726452853', '江西省景德镇市昌江区2', '2022-02-12 05:12:32');
 
 -- ----------------------------
 -- Table structure for t_user
@@ -215,7 +218,7 @@ CREATE TABLE `t_user` (
   `status` int(11) DEFAULT '1' COMMENT '1=正常，2=禁用',
   `avatar` varchar(255) COLLATE utf8_bin DEFAULT '' COMMENT '头像',
   `deleted` int(1) DEFAULT '0' COMMENT '0=未删除 1=已删除',
-  `role_id` int(11) DEFAULT '1' COMMENT '1=普通用户 2=管理员',
+  `role_id` int(11) DEFAULT '1' COMMENT '0=管理员 1=普通用户 2=商家',
   PRIMARY KEY (`id`),
   KEY `name_index` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='用户表';
@@ -226,3 +229,5 @@ CREATE TABLE `t_user` (
 INSERT INTO `t_user` VALUES ('5c60cebf9a81c08e542ccfa46415327a', 'lgy1', '321', '123', '1', '/images/head/6dd5e703-8b8c-47f1-8f73-603016211cf7.jpg', '0', '1');
 INSERT INTO `t_user` VALUES ('d193b6e8fa765440c16f8ffa01acbd00', 'zrq', '123', '123', '1', '/images/head/1ca18fa0-3b1d-4f7f-b0da-827ac35d2087.jpg', '0', '1');
 INSERT INTO `t_user` VALUES ('db113badd1b2408b9b37e8d491a19f50', 'admin', '12580', '123', '1', '/images/head/logo.png', '0', '0');
+INSERT INTO `t_user` VALUES ('e8d491a19f50c2b2408b9b37e8d4a6f5', 'sj1', '11580', '123', '1', '/images/head/logo.png', '0', '2');
+INSERT INTO `t_user` VALUES ('c2b2408b9b37e8d491a19f50a6f54a2d', 'sj2', '10580', '123', '1', '/images/head/logo.png', '0', '2');

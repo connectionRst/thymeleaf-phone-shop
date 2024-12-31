@@ -16,7 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
  *  前端控制器
  * </p>
  *
- * @author chen
+ * TODO 后端 API 路径前缀（需要同时修改 init.json）
+ * @author
  * @since 2022-01-30
  */
 @Controller
@@ -160,8 +161,48 @@ public class ViewController {
     }
 
     /*
-     * ==================================================前台页面========================================================================
+     * ==================================================商家界面========================================================================
      * */
+
+    //商家界面
+    @GetMapping("/shangjiaIndex")
+    public ModelAndView shangjiaIndex() {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("admin_shangjia/admin.html");
+        return mv;
+    }
+
+    //商品列表页面
+    @GetMapping("/shangjiaGoodList")
+    public ModelAndView shangjiaGoodList() {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("admin_shangjia/good/goodList.html");
+        return mv;
+    }
+
+    //添加商品列表页面
+    @GetMapping("/shangjiaGoodAdd")
+    public ModelAndView shangjiaGoodAdd() {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("admin_shangjia/good/goodAdd.html");
+        return mv;
+    }
+
+    //修改商品列表页面
+    @GetMapping("/shangjiaGoodEdit")
+    public ModelAndView shangjiaGoodEdit() {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("admin_shangjia/good/goodEdit.html");
+        return mv;
+    }
+
+    //管理员订单页面
+    @GetMapping("/shangjiaOrderList")
+    public ModelAndView shangjiaOrderList() {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("admin_shangjia/order/orderList.html");
+        return mv;
+    }
 
     //商城主页面
     @GetMapping("/")

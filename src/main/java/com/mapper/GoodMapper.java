@@ -18,5 +18,6 @@ import java.util.List;
 public interface GoodMapper extends BaseMapper<Good> {
 
     List<Good> getAll(@Param("name") String name, @Param("categoryId") String categoryId);
+    List<Good> shangjiaGetAll(@Param("name") String name, @Param("categoryId") String categoryId, @Param("shangjiaId") String shangjiaId);
 
 }

@@ -38,6 +38,12 @@ public class Cart implements Serializable {
     private String userId;
 
     /**
+     * 商家Id
+     * TODO
+     */
+//    private String shangjiaId;
+
+    /**
      * 数量
      */
     private Integer num;
