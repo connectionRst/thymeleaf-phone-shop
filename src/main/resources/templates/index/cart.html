@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="utf-8" />
+    <title>cart</title>
+    <link rel="stylesheet" href="/old/css/order/proList.css">
+    <link rel="stylesheet" href="/old/css/order/public.css">
+    <link rel="stylesheet" href="/old/css/order/sweetalert.css">
+
+    <script src="/old/js/jquery-3.4.1.js" ></script>
+    <link href="/old/css/bootstrap.css" rel="stylesheet">
+    <link href="/old/css/style.css" rel="stylesheet">
+    <script src="/old/js/bootstrap.js" type="text/javascript"></script>
+    <link href="/old/css/layui.css" media="all" rel="stylesheet">
+    <script src="/old/js/layui.js" type="text/javascript"></script>
+    <link href="/old/css/admin.css" rel="stylesheet">
+    <link href="/old/css/login.css" rel="stylesheet" >
+    <link href="/old/css/index.css" rel="stylesheet">
+
+</head>
+<body style="background-color: #fff;">
+<!--------------------------------------cart--------------------->
+<nav style="background-color:orange;" th:include="/index/header :: header"></nav>
+<div class="cart mt" style="width: 1200px;margin-left: 150px;">
+
+    <div class="site">
+        <p class=" wrapper clearfix">
+            <span class="fl">购物车</span>
+        </p>
+    </div>
+    <!-----------------table------------------->
+    <div class="table wrapper">
+        <div class="tr">
+            <div>商品</div>
+            <div>单价</div>
+            <div>数量</div>
+            <div>小计</div>
+            <div>操作</div>
+        </div>
+        <div id="cartlist">
+            <div class="th" th:if="${not #lists.isEmpty(cartList)}" th:each="cart:${cartList}">
+                <div class="pro clearfix">
+                    <label class="fl">
+                        <input type="checkbox" name="cart" th:value="${cart.getId()}">
+                        <span></span>
+                    </label>
+                    <a class="fl" href="javascript:void(0)">
+                        <dl class="clearfix">
+                            <dt class="fl"><img th:src="@{${cart.getGoodImg()}}" style="width: 120px;height: 120px;"></dt>
+                            <dd class="fl">
+                                <p style="width:220px;" id="gotoptitle" th:text="${cart.getGoodName()}"></p>
+                                <p style="width:220px;" id="cartalt" th:text="'商品分类：'+${cart.getGoodCategory()}"></p>
+                                <p style="width:220px;"  th:text="'商品属性：'+${cart.getGoodSku()}"></p>
+                                商品库存：<span th:id="'good' + ${cart.getId()}" style="width:220px;"  th:text="${cart.getGoodStock()}"></span>
+                            </dd>
+                        </dl>
+                    </a>
+                </div>
+                <div class="price" id="gotopprice"><p th:text="'￥'+${cart.getGoodPrice()}"></p></div>
+                <div class="number">
+                    <p class="num clearfix">
+                        <img class="fl sub"  th:onclick="reduce([[${cart.goodId}]])" th:src="@{'/images/aimg/sub.jpg'}">
+                        <span class="fl"   th:id="${cart.goodId}" th:text="${cart.getNum()}"></span>
+                        <img class="fl add"  th:onclick="add([[${cart.goodId}]])"  th:src="@{'/images//aimg/add.jpg'}">
+                    </p>
+                </div>
+                <div class="price sAll"><p th:text="'￥'+${cart.getTotalPrice()}"></p></div>
+                <div class="price"><a class="del" href="#" th:onclick="cartGoodsDelete([[${cart.id}]])">删除</a></div>
+            </div>
+        </div>
+
+        <div class="goOn" style="display: block;" th:if="${#lists.isEmpty(cartList)}">空空如也~<a th:href="@{/}">去逛逛</a></div>
+
+        <div class="tr clearfix">
+            <label class="fl">
+                <input class="checkAll" type="checkbox"/>
+                <span></span>
+            </label>
+            <p class="fl">
+                <a href="javascript:void(0)">全选</a>
+            </p>
+            <p class="fr">
+                <span>共<small id="sl">0</small>件商品</span>
+                <span style="margin-right: 20px">合计:&nbsp;<small id="all">￥0.00</small></span>
+                <a href="javascript:void(0)" class="count" onclick="buy();">结算</a>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="mask"></div>
+
+<!--footer-->
+<br><br><br><br><br><br><br><br>
+<div th:include="/index/footer :: footer"></div>
+
+<script src="/old/js/jquery-3.4.1.js" type="text/javascript" charset="utf-8"></script>
+<script src="/old/js/public.js" type="text/javascript" charset="utf-8"></script>
+<script src="/old/js/sweetalert.min.js"></script>
+<script src="/old/js/pro.js" type="text/javascript" charset="utf-8"></script>
+<script src="/old/js/cart.js"></script>
+<script src="/old/js/getParams.js"></script>
+<script src="/old/js/layui.js" type="text/javascript"></script>
+<script type="text/javascript">
+    layui.use(['form','layer','laydate',"upload"], function() {
+        var form = layui.form;
+        var layer=layui.layer;
+        var $ = layui.jquery;
+        var laydate = layui.laydate;
+        var upload = layui.upload;
+
+        $("#logout").click(function () {
+            layer.open({
+                title:'提示',
+                type:1,
+                offset:'auto',
+                content:'<div style="padding: 20px 60px;font-size: 15px">'+ '您是否确定注销登录?' +'</div>',
+                btn:['确定','取消'],
+                btnAlign:'c',
+                shade:0,
+                yes:function () {
+                    $.ajax({
+                        type:"get",
+                        url:"/user/logout",
+                        success:function(data){
+                            if (data.code == 200){
+                                window.location.href="/userLogin";
+                            }else {
+                                layer.msg("注销登录失败",{icon:5});
+                            }
+                        },
+                        error:function () {
+                            layer.msg("请求失败",{icon:5});
+                        }
+                    });
+                },
+                btn2:function () {
+                    layer.closeAll();
+                }
+
+            });
+        });
+    });
+</script>
+<script>
+
+     add = function (goodId) {
+        $.ajax({
+            type:"post",
+            url:"/cart/add",
+            data: {
+                goodId : goodId
+            },
+            success:function (data) {
+            }
+        })
+    }
+    reduce = function (goodId) {
+        $.ajax({
+            type:"post",
+            url:"/cart/delete",
+            data: {
+                goodId : goodId
+            },
+            success:function (data) {
+                if (data.code != 200){
+                    layer.msg("不能再减啦",{icon:5,time:800});
+                }
+            }
+        })
+    }
+     cartGoodsDelete = function (cartId) {
+        layer.open({
+            title:'提示',
+            type:1,
+            offset:'auto',
+            content:'<div style="padding: 20px 60px;font-size: 15px">'+ '是否确定将该商品移出购物车?' +'</div>',
+            btn:['确定','取消'],
+            btnAlign:'c',
+            shade:0,
+            yes:function () {
+                $.ajax({
+                    type:"post",
+                    url:"/cart/cartDelete/",
+                    data: {
+                        id : cartId
+                    },
+                    success:function (data) {
+                        if (data.code == 200){
+                            layer.msg("已将商品移出购物车",{icon:1,time:1000, shade:0.4}, function () {
+                                window.location.href = "/cart/getAll"
+                            });
+                        } else {
+                            layer.msg(data.msg, {icon:2, time:1500, shade:0.4})
+                        }
+                    }
+                });
+            },
+            btn2:function () {
+                layer.closeAll();
+            }
+        });
+    }
+    function buy() {
+        var cartIds = ''
+        var totalPrice = ''
+        $('.th input[type="checkbox"]:checked').each(function(){
+            cartIds += $(this).val() + ","
+        });
+        cartIds = cartIds.substr(0, cartIds.length - 1);
+        totalPrice = $("#all").text().substr(1);
+        window.location.href="/order/buy?cartIds=" + cartIds + "&&totalPrice=" + totalPrice;
+    }
+
+
+</script>
+
+</body>
+</html>

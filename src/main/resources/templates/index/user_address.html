@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/old/js/jquery-3.4.1.js" ></script>
+    <link href="/old/css/bootstrap.css" rel="stylesheet">
+    <link href="/old/css/style.css" rel="stylesheet">
+    <script src="/old/js/bootstrap.js" type="text/javascript"></script>
+    <link href="/old/css/layui.css" media="all" rel="stylesheet">
+    <script src="/old/js/layui.js" type="text/javascript"></script>
+    <link href="/old/css/admin.css" rel="stylesheet">
+    <link href="/old/css/login.css" rel="stylesheet" >
+    <link href="/old/css/index.css" rel="stylesheet">
+    <style>
+        .current{
+            background-color: rgba(20,8,31,0.55);
+        }
+    </style>
+</head>
+<body>
+<nav style="background-color:orange;" th:include="/index/header :: header"></nav>
+<br><br><br>
+<div class="container-fluid">
+    <div class="layadmin-user-login-box layadmin-user-login-header">
+        <h2 id="title">新增收货地址</h2>
+    </div>
+    <div style="width:500px;height:auto;margin:0 auto;">
+        <form class="layui-form" id="addAddrForm">
+
+            <div class="layui-form-item" >
+                <label class="layui-form-label">收货人名字:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="name" id="name"
+                           lay-verify="required" placeholder="请输入收货人名字"
+                           class="layui-input" />
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">收货人电话:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="phone" id="phone"
+                           lay-verify="phone" placeholder="请输入收货人电话号码"
+                           class="layui-input" />
+                </div>
+            </div>
+
+            <div class="layui-form-item" id="area-picker">
+                <label class="layui-form-label required">选择地址</label>
+                <div class="layui-input-block" style="width: 200px;">
+                    <select name="province" class="province-selector" lay-verify="required" lay-filter="province-1">
+                        <option value="">请选择省</option>
+                    </select>
+                </div>
+                <br>
+
+                <div class="layui-input-block" style="width: 200px;">
+                    <select name="city" class="city-selector" lay-verify="required" lay-filter="city-1">
+                        <option value="">请选择市</option>
+                    </select>
+                </div>
+                <br>
+
+                <div class="layui-input-block" style="width: 200px;">
+                    <select name="area" class="county-selector" lay-verify="required" lay-filter="county-1">
+                        <option value="">请选择区</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-form-text" >
+                <label class="layui-form-label">详细地址:</label>
+                <div class="layui-input-block">
+                    <textarea name="detail" id="detail"
+                           lay-verify="required" placeholder="请输入详细地址信息，如道路、门牌号、小区、楼栋号、单元等信息"
+                           class="layui-textarea"></textarea>
+                </div>
+            </div>
+
+            <div class="layui-form-item" style="padding-left:110px;" >
+                <button type="submit" class="layui-btn" lay-filter="address-submit" lay-submit="">点击保存</button>
+                <button type="reset" class="layui-btn layui-btn-warm">重置内容</button>
+            </div>
+
+        </form>
+    </div>
+
+
+   <div class="layui-form-item">
+       <ul style="width: 1800px">
+
+           <li class="layui-bg-green" style="">
+               <span class="layui-icon layui-icon-home" style="margin-left: 5px;font-size: 20px"></span>
+               <span style="font-size: 18px;">我的收货地址</span>
+           </li>
+       </ul>
+   </div>
+    <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+
+    <script type="text/html" id="currentTableBar">
+        <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+    </script>
+    <br><br><br><br>
+</div>
+<br><br>
+<div th:include="/index/footer :: footer"></div>
+
+<script src="/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script src="/js/lay-config.js?v=2.0.0" charset="utf-8"></script>
+<script type="text/javascript">
+    layui.use(['form','layer','laydate',"upload", "layarea", "table"], function() {
+        var form = layui.form;
+        var layer = layui.layer;
+        var layarea = layui.layarea;
+        var table = layui.table;
+        var $ = layui.jquery;
+
+        layarea.render({
+            elem: '#area-picker'
+        });
+
+        var addressTable = table.render({
+            elem: '#currentTableId',
+            url: '/address/getAll',
+            toolbar: '#toolbarDemo',
+            defaultToolbar: ['filter', 'exports', 'print', {
+                title: '提示',
+                layEvent: 'LAYTABLE_TIPS',
+                icon: 'layui-icon-tips'
+            }],
+            cols: [ [
+                {field: 'name', title: '收货人姓名'},
+                {field: 'phone',  title: '联系电话'},
+                {field: 'province',  title: '所在省'},
+                {field: 'city',  title: '所在城市'},
+                {field: 'area',  title: '所在县/区'},
+                {field: 'detail',  title: '详细地址'},
+                {field: 'defaulted',  title: '是否为默认地址', templet : function (d) {
+                        if (d.defaulted == 1) {
+                            return `<span style="color: green">默认</span>`
+                        } else {
+                            return `<span style="color: red">非默认</span>`
+                        }
+                    }},
+                {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
+            ] ],
+            limits: [15, 20, 25, 30, 50, 100],
+            limit: 15,
+            page: false,
+            skin: 'line'
+        });
+
+        table.on('tool(currentTableFilter)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'edit') {
+                var index = layer.open({
+                    title: '编辑收货地址',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin:true,
+                    shadeClose: true,
+                    area: ['90%', '95%'],
+                    content: 'addressEdit',
+                    success: function (layero, index) {
+                        var body = layer.getChildFrame('body',index);
+                        body.contents().find("#addressId").val(data.id)
+                    }
+                });
+                return false;
+            } else if (obj.event === 'delete') {
+                layer.confirm('确定删除该收货地址吗', function (index) {
+                    $.ajax({
+                        url:'/address/delete',
+                        type:'post',
+                        data: {
+                            id : data.id
+                        },
+                        success:function (data) {
+                            if (data.code == 200) {
+                                layer.msg(data.msg, {icon:1 ,shade:0.4, time:800}, function () {
+                                    addressTable.reload()
+                                })
+                            } else {
+                                layer.msg(data.msg, {icon:2 ,shade:0.4, time:800})
+                            }
+                        },
+                        error:function (data) {
+                            layer.msg(data.msg,{icon:2,shade:0.4, time:800})
+                        }
+                    })
+                });
+            }
+        });
+
+        form.on('submit(address-submit)',function (data) {
+            $.ajax({
+                type:"post",
+                url:"/address/add",
+                data: data.field,
+                success:function (data) {
+                    if(data.code == 200){
+                        layer.msg("添加收货地址成功！",{icon:1, shade:0.4, time:1500},function() {
+                            window.location.href = "/userAddress";
+                        });
+                    }else {
+                        layer.msg("添加收货地址失败！",{icon:5,shade:0.4, time:1500});
+                    }
+                },
+                error:function (data) {
+                    layer.msg("请求失败！",{icon:5,anim:4,time:1000});
+                }
+            });
+            return false;
+        });
+
+        $("#logout").click(function () {
+            layer.open({
+                title:'提示',
+                type:1,
+                offset:'auto',
+                content:'<div style="padding: 20px 60px;font-size: 15px">'+ '您是否确定注销登录?' +'</div>',
+                btn:['确定','取消'],
+                btnAlign:'c',
+                shade:0,
+                yes:function () {
+                    $.ajax({
+                        type:"get",
+                        url:"/user/logout",
+                        success:function(data){
+                            if (data.code == 200){
+                                window.location.href="/userLogin";
+                            }else {
+                                layer.msg("注销登录失败",{icon:5});
+                            }
+                        },
+                        error:function () {
+                            layer.msg("请求失败",{icon:5});
+                        }
+                    });
+                },
+                btn2:function () {
+                    layer.closeAll();
+                }
+
+            });
+        });
+    });
+</script>
+</body>
+</html>

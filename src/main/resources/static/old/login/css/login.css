@@ -1,0 +1,20 @@
+/* 公共属性 */
+body{font-size: 14px; color: black;}
+.zyl_center{text-align: center;}
+
+
+/* 间距 */
+.zyl_pad_01{padding: 5px 20px 5px 20px;}
+.zyl_mar_01{margin-top: 20px;}
+.zyl_mar_02{margin-top: 30px;}
+
+
+/* 登陆表单 */
+.zyl_lofo_main{background-color: white; width: 450px; height: 360px;position: fixed; right: 10%; top: 22%;border: 1px solid #3391ff}
+.zyl_lofo_icon{position: absolute; left: 5px; top: 8px; font-size: 20px;}
+.zyl_lofo_vercode{line-height: 35px; padding-left: 30px; font-size: 24px;}
+@media screen and (max-width: 768px) {
+	.zyl_lofo_main{width: 100%; height: 350px; right: 0;}
+}
+
+

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.CommentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.pojo.Comment">
+        <result column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="good_id" property="goodId" />
+        <result column="content" property="content" />
+        <result column="level" property="level" />
+        <result column="create_time" property="createTime" />
+        <association property="good" javaType="com.pojo.Good">
+            <result property="name" column="goodName"/>
+        </association>
+        <association property="user" javaType="com.pojo.User">
+            <result property="name" column="userName"/>
+        </association>
+    </resultMap>
+
+    <select id="getAll" resultMap="BaseResultMap">
+        select c.*, u.name as userName , g.name as goodName
+        from t_comment c
+        left join t_user u on u.id = c.user_id
+        left join t_good g on g.id = c.good_id
+        <where>
+            <if test="userName != null and userName != '' ">
+                and u.name like concat('%', #{userName}, '%')
+            </if>
+            <if test="goodName != null and goodName != '' ">
+                and g.name like concat('%', #{goodName}, '%')
+            </if>
+            <if test="content != null and content != '' ">
+                and c.content like concat('%', #{content}, '%')
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

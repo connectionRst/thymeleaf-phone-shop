@@ -1,0 +1,38 @@
+@font-face {
+  font-family: 'Helvetica Neue LT Std';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Helvetica Neue LT Std 65 Medium'), url(../fonts/HelveticaNeueLTStd-Md.otf) format('opentype');
+}
+@font-face {
+  font-family: 'Helvetica Neue LT Std';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Helvetica Neue LT Std 45 Light'), url(../fonts/helvetica-neue-lt-std-45-light.otf) format('opentype');
+}
+@font-face {
+  font-family: 'Helvetica Neue LT Std';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Helvetica Neue LT Std 75 Bold'), url(../fonts/HelveticaNeueLTStd-Bd.otf) format('opentype');
+}
+
+@font-face {
+  font-family: 'Helvetica Neue LT Std';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Helvetica Neue LT Std Regular Italic'), url(../fonts/HelveticaNeueLTStd-MdIt.otf) format('opentype');
+}
+@font-face {
+  font-family: 'Helvetica Neue LT Std';
+  font-style: italic;
+  font-weight: 700;
+  src: local('Helvetica Neue LT Std Bold Italic'), url(../fonts/HelveticaNeueLTStd-BdIt.otf) format('opentype');
+}
+
+@font-face {
+  font-family: 'Helvetica Neue LT Std';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Helvetica Neue LT Std 55 Roman'), url(../fonts/HelveticaNeueLTStd-Roman.otf) format('opentype');
+}

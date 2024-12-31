@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>掌逸手机商城</title>
+    <script src="/old/js/jquery-3.4.1.js"></script>
+    <link href="/old/css/public.css" rel="stylesheet"/>
+    <link href="/old/css/cz.css" rel="stylesheet"/>
+    <!--引入iconfont-->
+    <link href="/old/css/iconfont.css" rel="stylesheet" >
+    <!--引入swiper-->
+    <link href="/old/css/swiper.min.css" rel="stylesheet">
+    <script src="/old/js/swiper.js"></script>
+    <!---->
+    <link href="/old/css/bootstrap.css" rel="stylesheet">
+    <link href="/old/css/style.css" rel="stylesheet">
+    <link href="/old/css/index.css" rel="stylesheet">
+    <script src="/old/js/bootstrap.js" type="text/javascript"></script>
+    <script src="/old/js/index.js"></script>
+    <script src="/old/js/layui.js"></script>
+
+    <link href="/old/css/bootstrap.css" rel="stylesheet">
+    <link href="/old/css/style.css" rel="stylesheet">
+    <link href="/old/css/layui.css" media="all" rel="stylesheet">
+    <style>
+        .current{
+            background-color: rgba(20,8,31,0.55);
+        }
+    </style>
+</head>
+<body>
+<nav style="background-color:orange;" th:include="/index/header :: header"></nav>
+<div class="cz_head_nav">
+    <div class="h-list">
+        <ul id="categoryUl">
+        </ul>
+    </div>
+    <div class="h-sear" id="cz-search" style="margin-right: 100px">
+        <input type="text" id="goodName">
+        <i id="search" class="iconfont icon-xiazai17"></i>
+    </div>
+
+</div>
+<div class="cz_body">
+    <!--轮播图banner部分-->
+    <section class="cz_banner">
+        <div class="swiper-container main-swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide" th:each="banner:${bannerList}"><a th:href="@{${banner.getGoodId()}}">
+                    <img th:src="@{${banner.getImg()}}" alt=""></a></div>
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination main-swiper-pagination"></div>
+        </div>
+    </section>
+
+    <section class="b-r m-top-25">
+        <div class="phone-parts">
+            <table>
+                <tr>
+                    <td th:each="good:${goodList}">
+                        <div class="goodscon">
+                            <div class="swiper-container hotGoods-swiper-container">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide"><img style="padding-left: 60px;width: 240px;height: 200px;" th:src="@{${good.getImage()}}" alt=""></div>
+                                </div>
+                            </div>
+                            <div class="goods-link">
+                                <p><a href="">[[${good.getName()}]]</a></p>
+                                <p><a href="">[[${good.getSku()}]]</a></p>
+                            </div>
+                            <p class="goods-price">￥<span>[[${good.getPrice()}]]</span></p>
+                            <div class="whole-link">
+                                <a th:onclick="getGoodsDetail([[${good.id}]])" class="check-detail">查看详情</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </section>
+    <br>
+
+</div>
+
+<br><br>
+<div th:include="/index/footer :: footer"></div>
+<script>
+</script>
+<script>
+    //banner----swiper初始化
+    var mySwiper = new Swiper ('.main-swiper-container', {
+        autoplay:true,
+        speed:3000,
+        loop: true,
+        effect : 'fade',
+        fadeEffect: {
+            crossFade: true,
+        },
+        //分页器
+        pagination: {
+            el: '.main-swiper-pagination',
+            clickable:true,
+        },
+    });
+    //热门商品部分
+    var hotGoodsSwiper=new Swiper ('.hotGoods-swiper-container', {
+        autoplay:false,
+        effect : 'fade',
+        fadeEffect: {
+            crossFade: true,
+        },
+        //分页器
+        pagination: {
+            el: '.hotGoods-swiper-pagination',
+            clickable:true,
+        },
+    });
+
+</script>
+<script src="/old/js/notice.js"></script>
+<script type="text/javascript">
+
+    layui.use(['layer'], function() {
+
+        getGoodsDetail = function(goodsId){
+            window.location.href="/good/getGoodDetail?goodId="+goodsId;
+        }
+
+
+        $(function () {
+            $.getJSON('/category/getAllCategory', function(data){
+
+                var text = '<li><a href="/good/getAllGood">全部商品</a></li>';
+
+                $.each(data.data,function(index,content){
+
+                    text+='<li><a href="/good/getAllGood?categoryId='+content.id+'">'+ content.name +'</a></li>';
+
+                });
+                $("#categoryUl").append(text);
+            })
+        })
+
+        var layer = layui.layer;
+        $("#logout").click(function () {
+            layer.open({
+                title:'提示',
+                type:1,
+                offset:'auto',
+                content:'<div style="padding: 20px 60px;font-size: 15px">'+ '您是否确定注销登录?' +'</div>',
+                btn:['确定','取消'],
+                btnAlign:'c',
+                shade:0,
+                yes:function () {
+                    $.ajax({
+                        type:"get",
+                        url:"/user/logout",
+                        success:function(data){
+                            if (data.code == 200){
+                                window.location.href="/userLogin";
+                            }else {
+                                layer.msg("注销登录失败",{icon:5});
+                            }
+                        },
+                        error:function () {
+                            layer.msg("请求失败",{icon:5});
+                        }
+                    });
+                },
+                btn2:function () {
+                    layer.closeAll();
+                }
+
+            });
+        });
+
+        $("#search").click(function () {
+            var goodName = $("#goodName").val();
+            window.location.href="/good/getAllGood?goodName=" + goodName;
+        })
+
+        $("#test>li").mouseenter(function () {
+            $(this).addClass("current");
+        });
+        $("#test>li").mouseleave(function () {
+            $(this).removeClass("current");
+        })
+
+
+    });
+</script>
+</body>
+</html>

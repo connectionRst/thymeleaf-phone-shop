@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="/css/public.css" media="all">
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend>编辑商品</legend>
+        </fieldset>
+        <form class="layui-form" action="">
+            <input type="hidden" name="id" id="goodId">
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品名称</label>
+                <div class="layui-input-block">
+                    <input type="text" id="name" name="name" lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">类别</label>
+                <div class="layui-input-block">
+                    <select name="categoryId" id="categoryId">
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">价格</label>
+                <div class="layui-input-block">
+                    <input type="text" id="price" name="price" lay-verify="required"  class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">库存</label>
+                <div class="layui-input-block">
+                    <input type="number" id="stock" name="stock" lay-verify="number" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">规格</label>
+                <div class="layui-input-block">
+                    <input type="text" id="sku" name="sku" lay-verify="required" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">详情描述</label>
+                <div class="layui-input-block">
+                    <input type="text" id="remark" name="remark" lay-verify="required" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">状态</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="status" value="1" title="上架" checked="">
+                    <input type="radio" name="status" value="2" title="下架">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">图片:</label>
+                <div class="layui-input-block">
+                    <input type="hidden" id="image" name="image" lay-verify="required" lay-reqtext="请上传商品图片">
+                    <button type="button" id="imageBtn"  class="layui-btn" >
+                        <i class="layui-icon">&#xe67c;</i>上传本地照片
+                    </button>
+                </div>
+            </div>
+
+            <div id="goodView" class="layui-form-item">
+                <label class="layui-form-label">图片预览:</label>
+                <div class="layui-input-block">
+                    <img id="PreViewH" style="width:100px;height:100px">
+                </div>
+            </div>
+
+            <br>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn layui-btn-normal" lay-submit="submitBtn" lay-filter="submitBtn">提交</button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+<script src="/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'upload'], function () {
+        var form = layui.form,
+            upload = layui.upload,
+            $ = layui.jquery
+
+        //自定义验证规则
+        form.verify({
+
+        });
+
+        $(function () {
+            getAllCategory()
+            getGoodById()
+        })
+
+        function getAllCategory() {
+            $.getJSON("/category/getAllCategory", function (res) {
+
+                var html = ""
+                for (let i = 0; i < res.data.length; i++) {
+                    html += `<option value="${res.data[i].id}"> ${res.data[i].name} </option>`
+                }
+                $("#categoryId").append(html)
+                form.render()
+            })
+        }
+
+        //通过id获取用户信息
+        function getGoodById() {
+            var goodId = $("#goodId").val()
+            $.post('/good/getOne', { id : goodId } , function (res) {
+                var good = res.data
+                $("#name").val(good.name)
+                $("#price").val(good.price)
+                $("#stock").val(good.stock)
+                $("#remark").val(good.remark)
+                $("#categoryId").val(good.categoryId)
+                $("#sku").val(good.sku)
+                $("#image").val(good.image)
+                $("#PreViewH").attr("src", good.image)
+                $("input[name=status][value=" + good.status + "]").attr("checked", true);
+                form.render()
+            })
+        }
+
+        //图片上传
+        upload.render({
+            elem:'#imageBtn',
+            url:'/image/upload',
+            data: {
+                "type" : "head"
+            },
+            done:function (res) {
+                layer.msg('上传图片成功！',{icon:1, anim:4, time:1000, shade:0.4});
+                $("#image").prop("value",res.msg);
+                $("#PreViewH").prop("src", res.msg);
+            },
+            error:function () {
+                layer.msg('上传图片失败！',{icon:5, time:1000, shade:0.4});
+            }
+        });
+
+        //监听提交
+        form.on('submit(submitBtn)', function (data) {
+            $.ajax({
+                url:'/good/update',
+                type:'post',
+                data:data.field,
+                success:function (data) {
+                    if (data.code == 200) {
+                        layer.msg(data.msg, {icon:1, time:1000, shade:0.4}, function () {
+                            parent.location.reload()
+                        })
+                    } else {
+                        layer.msg(data.msg, {icon:2, time:1000, shade:0.4})
+                    }
+                },
+                error:function (data) {
+                    layer.msg(data.msg, {icon:2, time:1000, shade:0.4})
+                }
+            })
+            return false;
+        });
+
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html class="no-js" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="meta description">
+    <title>我的订单</title>
+    <link rel="stylesheet" href="/old/css/alert.css">
+    <link href="/old/assets2/css/vendor/font-awesome.css" rel="stylesheet">
+    <link href="/old/assets2/css/plugins.css" rel="stylesheet">
+    <link href="/old/assets2/css/helper.min.css" rel="stylesheet">
+    <link href="/old/assets2/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="/old/css/default.css">
+    <link rel="stylesheet" href="/old/css/singleShop.css">
+    <script src="/old/assets2/js/vendor/modernizr-2.8.3.min.js"></script>
+    <!--header-->
+    <link href="/old/css/bootstrap.css" rel="stylesheet">
+    <link href="/old/css/style.css" rel="stylesheet">
+    <link href="/old/css/layui.css" rel="stylesheet">
+    <style>
+        .current {
+            background-color: rgba(20, 8, 31, 0.55);
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+</head>
+
+<body>
+<nav style="background-color:orange;" th:include="/index/header :: header"></nav>
+<br>
+
+<!-- Modal -->
+<div id="page-content-wrapper">
+    <div class="container">
+        <!-- Wishlist Page Content Start -->
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Wishlist Table Area -->
+                <div class="cart-table table-responsive" style="width: 1400px;margin-left: -140px;">
+
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <!--<th class="pro-thumbnail">商品名称</th>-->
+                            <th class="pro-title">订单时间</th>
+                            <th class="pro-title">商品图片</th>
+                            <th class="pro-title">商品名称</th>
+                            <th class="pro-title">购买数量</th>
+                            <th class="pro-price">商品单价(元)</th>
+                            <th class="pro-price">订单总价格(元)</th>
+                            <th class="pro-quantity">订单状态</th>
+                            <th class="pro-subtotal">收货人</th>
+                            <th class="pro-remove">联系方式</th>
+                            <th class="pro-remove">收获地址</th>
+                            <th class="pro-remove">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:if="${#lists.isEmpty(orderList)}">
+                            <h2>暂无订单</h2>
+                        </tr>
+                        <tr th:if="${not #lists.isEmpty(orderList)}">
+                            <h2>我的订单</h2>
+                        </tr>
+                        <tr th:if="${not #lists.isEmpty(orderList)}" th:each="order,iterStat:${orderList}">
+                            <td class="pro-price"><span
+                                    th:text="${order.getFmtDateTime()}"></span></td>
+                            <td class="pro-price"><img style="height:50px;width:60px" th:src="@{${order.getGoodImage()}}" ></td>
+                            <td class="pro-price"><span
+                                    ><a th:text="${order.getGoodName()}" href="#" th:onclick="getGoodsDetail([[${order.goodId}]])"></a></span></td>
+                            <td class="pro-price"><span
+                                    th:text="${order.getNum()}"></span></td>
+                            <td class="pro-price"><span
+                                    th:text="${order.getPrice()}"></span></td>
+                            <td class="pro-price"><span
+                                    th:text="${order.getTotalPrice()}"></span></td>
+                            <td class="pro-price">
+                                <span style="display: none;" th:id="${iterStat.index} + 'state'" th:text="${order.getStatus()}"></span>
+                                <span th:if="${order.getStatus()  == 1}">待发货</span>
+                                <span th:if="${order.getStatus()  == 2}"><a
+                                        href="#"
+                                        th:onclick="require([[${order.getId()}]])" style="color: red">确认收货</a></span>
+                                <span th:if="${order.getStatus() == 3}"><a
+                                        href="#"
+                                        th:onclick="comment([[${order.getId()}]])" style="color: #e83e8c">前往评价</a></span>
+                                <span th:if="${order.getStatus()  == 4}" style="color: #1E9FFF"><a
+                                        href="#"
+                                        th:onclick="refund([[${order.getId()}]])" style="color: #e83e8c">申请退款</a></span>
+                                <span th:if="${order.getStatus()  == 5}" style="color: purple">退款中</span>
+                                <span th:if="${order.getStatus()  == 6}" style="color: brown">完成退款</span>
+                                <span th:if="${order.getStatus()  == 7}" style="color: gold">退款失败</span></td>
+                            <td class="pro-price"><span
+                                    th:text="${order.getName()}"></span></td>
+                            <td class="pro-price"><span
+                                    th:text="${order.getPhone()}"></span></td>
+                            <td class="pro-price"><span
+                                    th:text="${order.getAddress()}"></span></td>
+                            <td class="pro-remove"><a
+                                    href="#"
+                                    th:onclick="deleteOrder([[${order.getId()}]])"
+                                    ><i class="fa fa-trash-o"></i></a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Wishlist Page Content End -->
+    </div>
+</div>
+
+<script src="/old/index/js/jquery-3.3.1.min.js"></script>
+<script src="/old/assets2/js/vendor/jquery-3.3.1.min.js"></script>
+<script src="/old/assets2/js/vendor/jquery-migrate-1.4.1.min.js"></script>
+<script src="/old/assets2/js/vendor/popper.min.js"></script>
+<script src="/old/assets2/js/vendor/bootstrap.min.js"></script>
+<script src="/old/assets2/js/plugins.js"></script>
+<script src="/old/assets2/js/active.js"></script>
+<script src="/old/js/alert.js"></script>
+<script src="/old/js/layui.js"></script>
+
+<script th:inline="javascript">
+    layui.use(['layer'], function () {
+        var layer = layui.layer;
+
+        $("#logout").click(function () {
+            layer.open({
+                title:'提示',
+                type:1,
+                offset:'auto',
+                content:'<div style="padding: 20px 60px;font-size: 15px">'+ '您是否确定注销登录?' +'</div>',
+                btn:['确定','取消'],
+                btnAlign:'c',
+                shade:0,
+                yes:function () {
+                    $.ajax({
+                        type:"get",
+                        url:"/user/logout",
+                        success:function(data){
+                            if (data.code == 200){
+                                window.location.href="/userLogin";
+                            }else {
+                                layer.msg("注销登录失败",{icon:5});
+                            }
+                        },
+                        error:function () {
+                            layer.msg("请求失败",{icon:5});
+                        }
+                    });
+                },
+                btn2:function () {
+                    layer.closeAll();
+                }
+
+            });
+        });
+    });
+    getGoodsDetail = function(goodsId){
+        window.location.href="/good/getGoodDetail?goodId="+goodsId;
+    }
+    $("#test>li").mouseenter(function () {
+        $(this).addClass("current");
+    });
+    $("#test>li").mouseleave(function () {
+        $(this).removeClass("current");
+    })
+    /*删除订单*/
+     deleteOrder = function (orderId) {
+        layer.open({
+            title: '提示',
+            type: 1,
+            offset: 'auto',
+            content: '<div style="padding: 20px 50px;font-size: 15px">' + '是否删除该商品订单?' + '</div>',
+            btn: ['是', '否'],
+            btnAlign: 'c',
+            shade: 0,
+            yes: function () {
+                $.ajax({
+                    type: "post",
+                    url: "/order/delete",
+                    data: {
+                        id : orderId
+                    },
+                    success: function (data) {
+                        if (data.code == 200){
+                            layer.msg(data.msg, {icon:1, time:1000, shade:0.4}, function () {
+                                window.location.href = "/order/getAll"
+                            });
+                        } else {
+                            layer.msg(data.msg, {icon:2, time:1500, shade:0.4}, function () {
+                                window.location.href = "/order/getAll"
+                            })
+
+                        }
+                    },
+                    error: function () {
+                        layer.msg("请求失败", {icon: 5});
+                    }
+                });
+            },
+            btn2: function () {
+                layer.closeAll();
+            }
+        });
+    }
+
+    /*确认收货*/
+     require = function (orderId) {
+            layer.open({
+                title: '提示',
+                type: 1,
+                offset: 'auto',
+                content: '<div style="padding: 20px 50px;font-size: 15px">' + '是否确认收货?' + '</div>',
+                btn: ['是', '否'],
+                btnAlign: 'c',
+                shade: 0,
+                yes: function () {
+                    $.ajax({
+                        type: "post",
+                        url:"/order/updateStatus",
+                        data:{
+                            orderId : orderId,
+                            status : 3
+                        },
+                        success:function (data) {
+                            if (data.code == 200){
+                                layer.msg(data.msg, {icon:1, time:1000, shade:0.4}, function () {
+                                    window.location.href = "/order/getAll"
+                                });
+                            } else {
+                                layer.msg(data.msg, {icon:2, time:1500, shade:0.4})
+                            }
+                        }
+                    });
+                },
+                btn2: function () {
+                    layer.closeAll();
+                }
+            });
+    }
+
+    //申请退款
+    refund = function (orderId) {
+        layer.open({
+            title: '提示',
+            type: 1,
+            offset: 'auto',
+            content: '<div style="padding: 20px 50px;font-size: 15px">' + '是否确认申请退款?' + '</div>',
+            btn: ['是', '否'],
+            btnAlign: 'c',
+            shade: 0,
+            yes: function () {
+                $.ajax({
+                    type: "post",
+                    url:"/order/updateStatus",
+                    data:{
+                        orderId : orderId,
+                        status : 5
+                    },
+                    success:function (data) {
+                        if (data.code == 200){
+                            layer.msg(data.msg, {icon:1, time:1000, shade:0.4}, function () {
+                                window.location.href = "/order/getAll"
+                            });
+                        } else {
+                            layer.msg(data.msg, {icon:2, time:1500, shade:0.4})
+                        }
+                    }
+                });
+            },
+            btn2: function () {
+                layer.closeAll();
+            }
+        });
+    }
+
+    /*商品评价*/
+    function comment(orderId) {
+        localStorage.setItem('orderId', orderId)
+        layer.open({
+            type:2,
+            title:"商品评价",
+            content:'userComment',
+            shade: 0.2,
+            maxmin:true,
+            shadeClose: true,
+            area: ['60%', '75%'],
+            btn:['关闭'],
+        })
+        return false
+    }
+
+</script>
+</body>
+</html>

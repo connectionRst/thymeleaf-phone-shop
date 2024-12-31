@@ -1,0 +1,129 @@
+{
+  "homeInfo": {
+    "title": "首页",
+    "href": "userList"
+  },
+  "logoInfo": {
+    "title": "掌逸商城",
+    "image": "images/logo.png",
+    "href": ""
+  },
+  "menuInfo": [
+    {
+      "title": "常规管理",
+      "icon": "fa fa-address-book",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "用户管理",
+          "href": "",
+          "icon": "fa fa-user",
+          "target": "_self",
+          "child": [
+            {
+              "title": "用户列表",
+              "href": "userList",
+              "icon": "",
+              "target": "_self"
+            },
+            {
+              "title": "添加用户",
+              "href": "userAdd",
+              "icon": "",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "商品类别管理",
+          "href": "",
+          "icon": "fa fa-book",
+          "target": "_self",
+          "child": [
+            {
+              "title": "类别列表",
+              "href": "categoryList",
+              "icon": "",
+              "target": "_self"
+            },
+            {
+              "title": "添加类别",
+              "href": "categoryAdd",
+              "icon": "",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "商品管理",
+          "href": "",
+          "icon": "fa fa-book",
+          "target": "_self",
+          "child": [
+            {
+              "title": "商品列表",
+              "href": "goodList",
+              "icon": "",
+              "target": "_self"
+            },
+            {
+              "title": "添加商品",
+              "href": "goodAdd",
+              "icon": "",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "订单管理",
+          "href": "",
+          "icon": "fa fa-book",
+          "target": "_self",
+          "child": [
+            {
+              "title": "订单列表",
+              "href": "adminOrderList",
+              "icon": "",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "评论管理",
+          "href": "",
+          "icon": "fa fa-book",
+          "target": "_self",
+          "child": [
+            {
+              "title": "所有评论",
+              "href": "commentList",
+              "icon": "",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "轮播图管理",
+          "href": "",
+          "icon": "fa fa-book",
+          "target": "_self",
+          "child": [
+            {
+              "title": "轮播图列表",
+              "href": "bannerList",
+              "icon": "",
+              "target": "_self"
+            },
+            {
+              "title": "添加轮播图",
+              "href": "bannerAdd",
+              "icon": "",
+              "target": "_self"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

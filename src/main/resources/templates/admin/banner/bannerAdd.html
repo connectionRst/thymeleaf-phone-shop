@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="/css/public.css" media="all">
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend>添加轮播图</legend>
+        </fieldset>
+        <form class="layui-form" action="">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="name" lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品url地址</label>
+                <div class="layui-input-block">
+                    <input type="text" name="goodId" lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否选用</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="selected" value="1" title="选用" checked="">
+                    <input type="radio" name="selected" value="2" title="不选用">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">图片:</label>
+                <div class="layui-input-block">
+                    <input type="hidden" id="image" name="img" lay-verify="required" lay-reqtext="请上传轮播图">
+                    <button type="button" id="imageBtn"  class="layui-btn" >
+                        <i class="layui-icon">&#xe67c;</i>上传本地照片
+                    </button>
+                </div>
+            </div>
+
+            <div id="bannerView" class="layui-form-item" style="display: none">
+                <label class="layui-form-label">图片预览:</label>
+                <div class="layui-input-block">
+                    <img id="PreViewH" style="width:300px;height:100px">
+                </div>
+            </div>
+
+            <br>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn layui-btn-normal" lay-submit="submitBtn" lay-filter="submitBtn">提交</button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+<script src="/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'upload'], function () {
+        var form = layui.form,
+            upload = layui.upload,
+            $ = layui.jquery
+
+
+        //图片上传
+        upload.render({
+            elem:'#imageBtn',
+            url:'/image/upload',
+            data: {
+                "type" : "banner"
+            },
+            done:function (res) {
+                layer.msg('上传图片成功！',{icon:1, anim:4, time:1000, shade:0.4});
+                $("#image").prop("value",res.msg);
+                $("#bannerView").css("display","inline")
+                $("#PreViewH").prop("src", res.msg);
+            },
+            error:function () {
+                layer.msg('上传图片失败！',{icon:5, time:1000, shade:0.4});
+            }
+        });
+
+        //监听提交
+        form.on('submit(submitBtn)', function (data) {
+            $.ajax({
+                url:'/banner/add',
+                type:'post',
+                data:data.field,
+                success:function (data) {
+                    if (data.code == 200) {
+                        layer.msg(data.msg, {icon:1, time:1000, shade:0.4}, function () {
+                            window.location.href = 'bannerAdd'
+                        })
+                    } else {
+                        layer.msg(data.msg, {icon:2, time:1000, shade:0.4})
+                    }
+                },
+                error:function (data) {
+                    layer.msg(data.msg, {icon:2, time:1000, shade:0.4})
+                }
+            })
+            return false;
+        });
+    });
+</script>
+</body>
+</html>
