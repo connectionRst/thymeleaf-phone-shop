@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  database:
+    image: mysql:latest
+    environment:
+      # to keep the locale consistent, set it to the same as webapp
+      # FIXME: error in shell
+      # another possible solution: hard-encode chinese with unicode-escape character in sql file
+      LC_ALL: zh_CN.UTF-8  
+      MYSQL_ROOT_PASSWORD: mzpa55w0re
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+      MYSQL_DATABASE: phone_shop
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mzpa55w0re
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./phone_shop.sql:/docker-entrypoint-initdb.d/phone_shop.sql
+    networks:
+      - ps_net
+
+  webapp:
+    depends_on:
+      - database
+    image: phone_shop
+    # TODO random password
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://database/phone_shop?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+      SPRING_DATASOURCE_USERNAME: myuser
+      SPRING_DATASOURCE_PASSWORD: mzpa55w0re
+    ports:
+      - "8080:8080"
+    networks:
+      - ps_net
+
+networks:
+  ps_net:
+
+volumes:
+  mysql_data:
